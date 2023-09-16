@@ -1,6 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { PdaMintAuthority } from "../target/types/pda_mint_authority";
+import { PdaMintAuthority } from "../target/types/pda_mint_transfer_authority";
 import { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } from "@solana/web3.js";
 import { Metaplex } from "@metaplex-foundation/js";
 import {

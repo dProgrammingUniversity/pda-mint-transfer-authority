@@ -11,7 +11,7 @@ contract pda_mint_transfer_authority {
         @bump bytes1 _bump  // bump for the pda address
     ) {
         // Independently derive the PDA address from the seeds, bump, and programId
-        (address pda, bytes1 pdaBump) = try_find_program_address(["mint_authority"], type(pda_mint_authority).program_id);
+        (address pda, bytes1 pdaBump) = try_find_program_address(["mint_authority"], type(pda_mint_transfer_authority).program_id);
 
         // Verify that the bump passed to the constructor matches the bump derived from the seeds and programId
         // This ensures that only the canonical pda address can be used to create the account (first bump that generates a valid pda address)
@@ -67,7 +67,7 @@ contract pda_mint_transfer_authority {
 		string uri // token uri
     ) private {
         // // Independently derive the PDA address from the seeds, bump, and programId
-        (address pda, bytes1 _bump) = try_find_program_address(["mint_authority"], type(pda_mint_authority).program_id);
+        (address pda, bytes1 _bump) = try_find_program_address(["mint_authority"], type(pda_mint_transfer_authority).program_id);
 
         require(address(this) == pda, 'INVALID_PDA');
 
@@ -161,7 +161,7 @@ contract pda_mint_transfer_authority {
     }
 
     function _transfer(address src, address dest, uint64 amount) private {
-        (address pda, bytes1 _bump) = try_find_program_address(["mint_authority"], type(pda_mint_authority).program_id);
+        (address pda, bytes1 _bump) = try_find_program_address(["mint_authority"], type(pda_mint_transfer_authority).program_id);
         require(address(this) == pda, 'INVALID_PDA');
 
         bytes instructionData = new bytes(9);
@@ -181,7 +181,7 @@ contract pda_mint_transfer_authority {
     // Invoke the token program to mint tokens to a token account, using a PDA as the mint authority
     function _mintTo(address mint, address account, uint64 amount) private {
         // Independently derive the PDA address from the seeds, bump, and programId
-        (address pda, bytes1 _bump) = try_find_program_address(["mint_authority"], type(pda_mint_authority).program_id);
+        (address pda, bytes1 _bump) = try_find_program_address(["mint_authority"], type(pda_mint_transfer_authority).program_id);
         require(address(this) == pda, 'INVALID_PDA');
 
         // Prepare instruction data
@@ -202,7 +202,7 @@ contract pda_mint_transfer_authority {
 
     function _removeMintAuthority(address mintAccount) private {
         // Independently derive the PDA address from the seeds, bump, and programId
-        (address pda, bytes1 _bump) = try_find_program_address(["mint_authority"], type(pda_mint_authority).program_id);
+        (address pda, bytes1 _bump) = try_find_program_address(["mint_authority"], type(pda_mint_transfer_authority).program_id);
         require(address(this) == pda, 'INVALID_PDA');
 
 		AccountMeta[2] metas = [
